@@ -1,10 +1,9 @@
 import './Contact.css';
-import Header from '../Components/Header'
 import Footer from './Footer';
+import ContactForm from './ContactFrom'
 const ContactPage = () => {
   return (
     <div className="glv">
-    <Header></Header>
     <div className="contact-page">
                 <h2>Контакты</h2>
       <div className="contact-details">
@@ -33,21 +32,7 @@ const ContactPage = () => {
         frameborder="0"
         ></iframe>
       </div>
-      <div className="message-container">
-        <p>Отправьте нам сообщение</p>
-        <p>Если у вас есть какие-то вопросы  или предложения по сотрудничеству заполните форму ниже</p>
-        <div className="contact-container">
-        <div className="data-container">
-        <input type="text" name="username" placeholder="Введите имя"/>
-        <input type="email" name="email" placeholder="Email"/>
-        <input type='phone' name='phone' placeholder='Введите телефон'/>
-        </div>
-        <div className="message-container">
-        <textarea placeholder="Сообщение"></textarea>
-        </div>
-        </div>
-        <button>Отправить</button>
-      </div>
+    <ContactForm></ContactForm>
     </div>
     </div>
     <Footer></Footer>

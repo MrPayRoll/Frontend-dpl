@@ -17,9 +17,9 @@ const ModalAuth = ({ activeAuth, setActiveAuth, onLogin }) => {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('https://b279-94-141-125-64.ngrok-free.app/api/user/login', formData);
+            const response = await axios.post('https://04d3-94-141-125-64.ngrok-free.app/api/user/login', formData);
             console.log(response.data); 
-            onLogin();
+            onLogin(response.data);
             setActiveAuth(false);
         } catch (error) {
             console.error("Ошибка при отправке запроса:", error);

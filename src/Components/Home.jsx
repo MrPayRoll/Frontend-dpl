@@ -2,8 +2,9 @@ import vsecatalogi from '../assets/home_img/vsecatalogi.jpg';
 import shina from '../assets/home_img/shina.jpg';
 import maslo from '../assets/home_img/maslo.jpg';
 import himia from '../assets/home_img/himia.jpg';
+import zapchasti from '../assets/home_img/zapchasti.jpg';
+import inst from '../assets/home_img/inst.jpg';
 import '../Components/Home.css';
-import Header from './Header';
 import { Link } from 'react-router-dom';
 import Slider from './Slider';
 import auto_one from '../assets/auto_one.jpg'
@@ -15,7 +16,6 @@ import Footer from './Footer';
 function Home() {
   return (
     <div className='glavni'>
-      <Header></Header>
       <div className="container">
         <div className="category-section">
           <Link to="/catalog" className="item-link">
@@ -32,7 +32,7 @@ function Home() {
           </Link>
           <Link to="/catalog?info_id=2" className="item-link">
           <div className="category-item">
-            <img src={himia} alt="Технические запчасти" className="category-img" />
+            <img src={zapchasti} alt="Технические запчасти" className="category-img" />
             <p>Тех запчасти</p>
           </div>
           </Link>
@@ -44,7 +44,7 @@ function Home() {
           </Link>
           <Link to="/catalog?info_id=4" className="item-link">
           <div className="category-item">
-            <img src={himia} alt="Инструменты" className="category-img" />
+            <img src={inst} alt="Инструменты" className="category-img" />
             <p>Инструменты</p>
           </div>
           </Link>

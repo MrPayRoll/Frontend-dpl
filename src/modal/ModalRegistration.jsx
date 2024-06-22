@@ -9,7 +9,7 @@ const Modal = ({ active, setActive }) => {
         password: ""
     });
 
-    const [agreeTerms, setAgreeTerms] = useState(false); // State for checkbox
+    const [agreeTerms, setAgreeTerms] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -29,20 +29,17 @@ const Modal = ({ active, setActive }) => {
         }
     
         try {
-            const response = await axios.post('https://b279-94-141-125-64.ngrok-free.app/api/user/registration', formData);
+            const response = await axios.post('https://04d3-94-141-125-64.ngrok-free.app/api/user/registration', formData);
             console.log(response.data);
             setActive(false);
         } catch (error) {
             if (error.response) {
-                // Request made and server responded with a status code
                 console.error("Server responded with error:", error.response.status, error.response.data);
                 alert("Failed to register. Please try again later.");
             } else if (error.request) {
-                // The request was made but no response was received
                 console.error("Request error:", error.request);
                 alert("Failed to connect to the server. Please try again later.");
             } else {
-                // Something happened in setting up the request that triggered an error
                 console.error("Request setup error:", error.message);
                 alert("An unexpected error occurred. Please try again later.");
             }

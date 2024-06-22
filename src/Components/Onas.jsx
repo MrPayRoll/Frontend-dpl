@@ -1,12 +1,10 @@
 import React from 'react';
 import '../Components/Onas.css';
-import Header from '../Components/Header';
 import Footer from './Footer';
 
 const Onas = () => {
     return (
         <>
-            <Header></Header>
             <div className="container-onas">
                 <h2>О Нас</h2>
                 <p>

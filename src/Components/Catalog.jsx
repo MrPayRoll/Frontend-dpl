@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../Components/Catalog.css';
 import axios from 'axios';
-import Header from '../Components/Header';
 import { useLocation } from 'react-router-dom';
 
 function Catalog() {
@@ -12,11 +11,11 @@ function Catalog() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedCategories, setSelectedCategories] = useState({
-    1: false, // Шины
-    2: false, // Тех запчасти
-    3: false, // Масла
-    4: false, // Инструменты
-    5: false, // АвтоХимия
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
   });
 
   const location = useLocation();
@@ -41,16 +40,12 @@ function Catalog() {
   const filterByPriceAndCategory = (searchQuery = '') => {
     if (!data) return;
 
-    // Фильтрация по цене
     let filtered = data.filter((item) => item.price >= minValue && item.price <= maxValue);
-
-    // Фильтрация по категориям, если выбраны
+    
     const selectedCategoryValues = Object.values(selectedCategories);
     if (selectedCategoryValues.some((value) => value)) {
       filtered = filtered.filter((item) => selectedCategories[item.info_id]);
     }
-
-    // Фильтрация по поисковому запросу
     if (searchQuery) {
       filtered = filtered.filter((item) =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -64,7 +59,7 @@ function Catalog() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://b279-94-141-125-64.ngrok-free.app/api/detail/all', {
+        const response = await axios.get('https://04d3-94-141-125-64.ngrok-free.app/api/detail/all', {
           headers: {
             'ngrok-skip-browser-warning': 'true',
           },
@@ -133,7 +128,6 @@ function Catalog() {
 
   return (
     <>
-      <Header />
       <div className='glivn'>
         <div className="container-common">
           <div className="sidebar">

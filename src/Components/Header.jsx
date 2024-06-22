@@ -4,40 +4,30 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import Modal from '../modal/ModalRegistration';
 import ModalAuth from "../modal/ModalAuth";
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../modal/AuthContext';
 
 function Header() {
     const [modalActive, setModalActive] = useState(false);
     const [modalActiveAuth, setModalActiveAuth] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { isAuthenticated, login, logout, user } = useAuth();
     const [showCatalog, setShowCatalog] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [showProfileMenu, setShowProfileMenu] = useState(false);
 
     const navigate = useNavigate();
 
-    const saveUserDataToLocalStorage = (userData) => {
-        localStorage.setItem('userData', JSON.stringify(userData));
-    };
-
-    const removeUserDataFromLocalStorage = () => {
-        localStorage.removeItem('userData');
-    };
-
     useEffect(() => {
-        const userDataFromLocalStorage = localStorage.getItem('userData');
-        if (userDataFromLocalStorage) {
-            setIsLoggedIn(true);
-        }
-    }, []);
+        console.log('User object:', user);
+    }, [user]);
 
     const handleLogin = (userData) => {
-        setIsLoggedIn(true);
-        saveUserDataToLocalStorage(userData);
+        login(userData);
         setModalActiveAuth(false);
     };
 
     const handleLogout = () => {
-        setIsLoggedIn(false);
-        removeUserDataFromLocalStorage();
+        logout();
+        setShowProfileMenu(false);
     };
 
     const handleSearch = () => {
@@ -65,25 +55,33 @@ function Header() {
                 </div>
                 <div className="icon-links">
                     <Link to="/contact" className="item-link">
-                        <a href="#">
-                            <i className="fas fa-address-book"></i>
-                            <span>Контакты</span>
-                        </a>
+                        <i className="fas fa-address-book"></i>
+                        <span>Контакты</span>
                     </Link>
                     <Link to="/onas" className="item-link">
-                        <a href="#">
-                            <i className="fas fa-info-circle"></i>
-                            <span>О нас</span>
-                        </a>
+                        <i className="fas fa-info-circle"></i>
+                        <span>О нас</span>
                     </Link>
                     <Link to="/basket" className="item-link">
-                        <a href="#">
-                            <i className="fas fa-shopping-cart"></i>
-                            <span>Корзина</span>
-                        </a>
+                        <i className="fas fa-shopping-cart"></i>
+                        <span>Корзина</span>
                     </Link>
-                    {isLoggedIn ? (
-                        <button className='open-btn' onClick={handleLogout}>Выход</button>
+                    {isAuthenticated ? (
+                        <div className="profile-menu">
+                            <div className="profile-icon" onClick={() => setShowProfileMenu(!showProfileMenu)}>
+                                <i className="fas fa-user-circle"></i>
+                                <span>Профиль</span>
+                            </div>
+                            {showProfileMenu && (
+                                <div className="profile-dropdown">
+                                    <Link to="/profile" onClick={() => setShowProfileMenu(false)}>Мой профиль</Link>
+                                    {user && user.role === 'ADMIN' && (
+                                        <Link to="/admin" onClick={() => setShowProfileMenu(false)}>Админ панель</Link>
+                                    )}
+                                    <button onClick={handleLogout}>Выход</button>
+                                </div>
+                            )}
+                        </div>
                     ) : (
                         <div className="auth-links">
                             <div className="auth-icons">
