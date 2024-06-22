@@ -130,7 +130,7 @@ function Catalog() {
     <>
       <div className='glivn'>
         <div className="container-common">
-          <div className="sidebar">
+          <div className="sidebarr">
             <div className="filter-section">
               <h4>Price Range</h4>
               <div className="range-container">
@@ -151,14 +151,14 @@ function Catalog() {
                   min="0"
                   max="10000"
                 />
-                <div className="slider-container">
+                <div className="slider-container-ct">
                   <input
                     type="range"
                     min="0"
                     max="10000"
                     value={minValue}
                     onChange={handleMinChange}
-                    className="slider"
+                    className="slider-ct"
                   />
                   <input
                     type="range"
@@ -166,7 +166,7 @@ function Catalog() {
                     max="10000"
                     value={maxValue}
                     onChange={handleMaxChange}
-                    className="slider"
+                    className="slider-ct"
                   />
                 </div>
               </div>

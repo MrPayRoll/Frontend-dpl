@@ -11,7 +11,7 @@ import ProfilePage from "./Components/Lk";
 import Onas from "./Components/Onas";
 import Modal from './modal/ModalRegistration';
 import YourComponent from './Components/test';
-import DetailForm from './Components/test';
+import DetailForm from './Components/AdminPanel';
 import Slider from './Components/Slider';
 import PrivateRoute from './modal/PrivateRoute';
 export default function App() {
