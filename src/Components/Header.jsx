@@ -9,7 +9,7 @@ import { useAuth } from '../modal/AuthContext';
 function Header() {
     const [modalActive, setModalActive] = useState(false);
     const [modalActiveAuth, setModalActiveAuth] = useState(false);
-    const { isAuthenticated, login, logout, user } = useAuth();
+    const {isAuthenticated, login, logout, user } = useAuth();
     const [showCatalog, setShowCatalog] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [showProfileMenu, setShowProfileMenu] = useState(false);

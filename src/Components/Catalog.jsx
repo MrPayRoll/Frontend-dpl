@@ -4,10 +4,10 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
 function Catalog() {
-  const [filteredData, setFilteredData] = useState(null);
+  const [filteredData, setFilteredData] = useState([]);
   const [minValue, setMinValue] = useState(0);
   const [maxValue, setMaxValue] = useState(5000);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedCategories, setSelectedCategories] = useState({
@@ -38,7 +38,7 @@ function Catalog() {
   };
 
   const filterByPriceAndCategory = (searchQuery = '') => {
-    if (!data) return;
+    if (!Array.isArray(data)) return;
 
     let filtered = data.filter((item) => item.price >= minValue && item.price <= maxValue);
     
@@ -59,13 +59,17 @@ function Catalog() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://04d3-94-141-125-64.ngrok-free.app/api/detail/all', {
+        const response = await axios.get('https://c330-94-141-125-64.ngrok-free.app/api/detail/all', {
           headers: {
             'ngrok-skip-browser-warning': 'true',
           },
         });
-        setData(response.data); 
-        setFilteredData(response.data);
+        if (Array.isArray(response.data)) {
+          setData(response.data);
+          setFilteredData(response.data);
+        } else {
+          throw new Error('Data is not an array');
+        }
       } catch (error) {
         setError(error);
       } finally {
@@ -94,37 +98,6 @@ function Catalog() {
     const searchQuery = params.get('search');
     filterByPriceAndCategory(searchQuery);
   }, [minValue, maxValue, data, selectedCategories]);
-
-  const handleBuyClick = async (itemId) => {
-    try {
-      const response = await axios.post('https://b279-94-141-125-64.ngrok-free.app/api/basket/add', {
-        detail_id: itemId
-      }, {
-        headers: {
-          'ngrok-skip-browser-warning': 'true',
-        },
-      });
-  
-      if (response.status === 200) {
-        alert('Товар добавлен в корзину');
-      } else {
-        console.error('Ошибка при добавлении товара в корзину', response.status, response.statusText);
-        alert('Не удалось добавить товар в корзину');
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error('AxiosError:', error.response?.data || error.message);
-        alert(`Ошибка при добавлении товара в корзину: ${error.response?.data?.message || error.message}`);
-      } else {
-        console.error('Unexpected error:', error);
-        alert('Произошла неожиданная ошибка при добавлении товара в корзину');
-      }
-    }
-  };
-  
-  
-
-  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <>

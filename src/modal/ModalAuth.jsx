@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import './ModalAuth.css';
 
 const ModalAuth = ({ activeAuth, setActiveAuth, onLogin }) => { 
@@ -17,12 +19,25 @@ const ModalAuth = ({ activeAuth, setActiveAuth, onLogin }) => {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('https://04d3-94-141-125-64.ngrok-free.app/api/user/login', formData);
-            console.log(response.data); 
+            const response = await axios.post('https://c330-94-141-125-64.ngrok-free.app/api/user/login', formData);
+            console.log("Response data:", response.data); 
             onLogin(response.data);
             setActiveAuth(false);
         } catch (error) {
-            console.error("Ошибка при отправке запроса:", error);
+            if (axios.isAxiosError(error)) {
+                console.error("Ошибка при отправке запроса:", error.message);
+                console.error("Подробности ошибки:", error.response);
+                if (error.response) {
+                    console.error("Data:", error.response.data);
+                    console.error("Status:", error.response.status);
+                    console.error("Headers:", error.response.headers);
+                    if (error.response.status === 500) {
+                        toast.error("Неверный email или пароль.");
+                    }
+                }
+            } else {
+                console.error("Unexpected error:", error);
+            }
         }
     };
 
@@ -45,6 +60,7 @@ const ModalAuth = ({ activeAuth, setActiveAuth, onLogin }) => {
                 />
                 <button onClick={handleSubmit}>Войти</button>
             </div>
+            <ToastContainer />
         </div>
     );
 };

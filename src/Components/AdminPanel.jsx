@@ -45,7 +45,7 @@ function DetailForm() {
         info_id: info
       };
 
-      const response = await axios.post('https://6dc4-94-141-124-60.ngrok-free.app/api/detail/create', dataToSend);
+      const response = await axios.post('https://394d-94-141-125-64.ngrok-free.app/api/detail/create', dataToSend);
 
       console.log('Response:', response.data);
     } catch (error) {

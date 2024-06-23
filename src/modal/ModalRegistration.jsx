@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import './Registration.css';
 
 const Modal = ({ active, setActive }) => {
@@ -22,31 +24,41 @@ const Modal = ({ active, setActive }) => {
         setAgreeTerms(!agreeTerms);
     };
 
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    };
+
     const handleSubmit = async () => {
         if (!agreeTerms) {
-            alert("Please agree to terms and privacy policy");
+            toast.error("Пожалуйста, согласитесь с условиями и политикой конфиденциальности");
+            return;
+        }
+
+        if (!validateEmail(formData.email)) {
+            toast.error("Введите корректный email");
             return;
         }
     
         try {
-            const response = await axios.post('https://04d3-94-141-125-64.ngrok-free.app/api/user/registration', formData);
+            const response = await axios.post('https://c330-94-141-125-64.ngrok-free.app/api/user/registration', formData);
             console.log(response.data);
+            toast.success("Регистрация прошла успешно!");
             setActive(false);
         } catch (error) {
             if (error.response) {
                 console.error("Server responded with error:", error.response.status, error.response.data);
-                alert("Failed to register. Please try again later.");
+                toast.error("Некорректный email или пароль");
             } else if (error.request) {
                 console.error("Request error:", error.request);
-                alert("Failed to connect to the server. Please try again later.");
+                toast.error("Не удалось подключиться к серверу. Пожалуйста, попробуйте позже.");
             } else {
                 console.error("Request setup error:", error.message);
-                alert("An unexpected error occurred. Please try again later.");
+                toast.error("Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже.");
             }
         }
     };
     
-
     return (
         <div className={active ? "modal active" : "modal"} onClick={() => setActive(false)}>
             <div className="modal__content" onClick={e => e.stopPropagation()}>
@@ -79,11 +91,12 @@ const Modal = ({ active, setActive }) => {
                         onChange={handleCheckboxChange}
                     />
                     <label htmlFor="termsCheckbox">
-                        <span>Я соглашаюсь с<a href="/privacy" target="_blank">политикой конфиденциальности</a></span>
+                        <span>Я соглашаюсь с <a href="/privacy" target="_blank">политикой конфиденциальности</a></span>
                     </label>
                 </div>
                 <button onClick={handleSubmit}>Регистрация</button>
             </div>
+            <ToastContainer />
         </div>
     );
 };
