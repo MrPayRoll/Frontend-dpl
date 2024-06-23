@@ -23,9 +23,13 @@
     flex-direction: column;
     color: #0056b3;
 }
-
+.logo-text{
+    font-weight: 600;
+    font-size: 18px;
+}
 .logo-text-small {
     color: #ff7f27;
+    font-size: 15px;
 }
 
 .open-btn {

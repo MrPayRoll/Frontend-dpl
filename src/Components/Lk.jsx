@@ -5,7 +5,7 @@ const ProfilePage = () => {
     return (
         <div className="glv">
         <div className="profile-page">
-            <div className="sidebar">
+            <div className="sidebar-lk">
                 <div className="menu-item">Мой профиль</div>
                 <div className="menu-item">Заказы</div>
                 <div className="menu-item">Настройки</div>
@@ -40,10 +40,6 @@ const ProfilePage = () => {
                     </label>
                     <button className='button-lk' type="submit">Сохранить изменения</button>
                 </form>
-                <div className="photo-placeholder">
-                    <div className="circle large"></div>
-                    <div className="circle small"></div>
-                </div>
             </div>
         </div>
         </div>
